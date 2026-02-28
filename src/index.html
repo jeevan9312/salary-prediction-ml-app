@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salary Prediction App</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: rgba(0,0,0,0.3);
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    background: #00c6ff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0072ff;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Salary Prediction</h2>
+
+<input type="number" id="id" placeholder="Employee ID">
+
+<input type="number" id="age" placeholder="Age">
+
+<select id="gender" title="Gender">
+<option>Male</option>
+<option>Female</option>
+</select>
+
+<select id="education" title="Education Level">
+<option>Bachelor</option>
+<option>Master</option>
+<option>PhD</option>
+</select>
+
+<select id="job" title="Job Title">
+<option>Data Analyst</option>
+<option>Data Scientist</option>
+<option>ML Engineer</option>
+<option>Manager</option>
+</select>
+
+<input type="number" id="experience" placeholder="Experience Years">
+
+<select id="location" title="Location">
+<option>Tier1</option>
+<option>Tier2</option>
+<option>Tier3</option>
+</select>
+
+<button onclick="predict()">Predict Salary</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+
+<script>
+
+async function predict() {
+
+    const resultDiv = document.getElementById("result");
+
+    resultDiv.innerHTML = "Predicting...";
+
+    const data = {
+
+        ID: parseInt(document.getElementById("id").value),
+        Age: parseInt(document.getElementById("age").value),
+        Gender: document.getElementById("gender").value,
+        Education_Level: document.getElementById("education").value,
+        Job_Title: document.getElementById("job").value,
+        Experience_Years: parseInt(document.getElementById("experience").value),
+        Location: document.getElementById("location").value
+
+    };
+
+    try {
+
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+
+        });
+
+        if (!response.ok) {
+
+            resultDiv.innerHTML = "API ERROR: " + response.status;
+            return;
+        }
+
+        const result = await response.json();
+
+        resultDiv.innerHTML =
+            "Predicted Salary: ₹ " + result.predicted_salary.toFixed(2);
+
+    }
+    catch(error) {
+
+        resultDiv.innerHTML =
+            "Connection failed. Make sure FastAPI is running.";
+
+        console.error(error);
+    }
+}
+
+</script>
+
+</body></html>
