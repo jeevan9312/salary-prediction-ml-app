@@ -66,7 +66,7 @@ salary-prediction-ml-app/
 
 ### Machine Learning
 
-* Python
+* Python-3.10.13
 * Scikit-learn
 * Pandas
 * NumPy
