@@ -1,14 +1,8 @@
-# ============================================
-# Employee Salary Prediction - Training Pipeline
-# Fully Corrected Production Version
-# ============================================
-
 import pandas as pd
 import numpy as np
 import os
 import pickle
 
-# Sklearn imports
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -19,17 +13,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-
-# ============================================
-# 0. Confirm Script Execution
-# ============================================
-
 print("Training pipeline started successfully")
-
-
-# ============================================
-# 1. Define Paths Safely (Production Safe)
-# ============================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -43,11 +27,6 @@ DATA_PATH = os.path.join(
 
 MODEL_DIR = os.path.join(BASE_DIR, "..", "models")
 MODEL_PATH = os.path.join(MODEL_DIR, "salary_model.pkl")
-
-
-# ============================================
-# 2. Load Dataset
-# ============================================
 
 print("\nLoading dataset from:")
 print(DATA_PATH)
@@ -224,6 +203,7 @@ for name, mae, rmse, r2 in results:
     print(f"  RMSE     : {rmse:.2f}")
     print(f"  MAE      : {mae:.2f}")
     print("----------------------------------")
+
 
 
 print("\nTraining pipeline completed successfully")
