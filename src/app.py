@@ -1,11 +1,6 @@
-# ============================================
-# Salary Prediction Frontend - Streamlit App
-# ============================================
-
 import streamlit as st
 import requests
 
-# FastAPI endpoint
 API_URL = "http://127.0.0.1:8000/predict"
 
 st.set_page_config(
@@ -16,11 +11,6 @@ st.set_page_config(
 
 st.title("💰 Employee Salary Prediction")
 st.write("Enter employee details to predict salary")
-
-
-# ============================================
-# Input Fields
-# ============================================
 
 id_input = st.number_input("Employee ID", min_value=1, value=101)
 
@@ -44,11 +34,6 @@ location = st.selectbox(
     "Location",
     ["Tier1", "Tier2", "Tier3"]
 )
-
-
-# ============================================
-# Prediction Button
-# ============================================
 
 if st.button("Predict Salary"):
 
